@@ -1,7 +1,7 @@
 import pandas as pd
 
 # CSV 파일에서 데이터프레임 읽기
-file_path = '../OliveYoungCrawling/resultSkinType.csv'
+file_path = 'recommendation-service/data/resultSkinType.csv'
 product_df = pd.read_csv(file_path)
 
 # 새로운 사용자의 기본 정보

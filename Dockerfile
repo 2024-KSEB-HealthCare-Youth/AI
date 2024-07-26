@@ -1,5 +1,5 @@
 # Python 3.9 공식 이미지를 기반으로 설정
-FROM python:3.9
+FROM python:3.10.4
 
 # 작업 디렉토리 설정
 WORKDIR /
@@ -11,4 +11,4 @@ COPY .. .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 컨테이너 실행 시 실행할 명령
-CMD ["python", "/recommendation-service/app/content_based_filtering.py"]
+CMD ["python", "/recommendation-service/app/app.py"]

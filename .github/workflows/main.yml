@@ -35,6 +35,12 @@ jobs:
         with:
           python-version: '3.10.14'
 
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install keras==2.15
+          pip install flask_cors pandas==2.1.3 scikit-surprise==1.1.4 flask==3.0.3 flask_restx==1.3.0 requests==2.32.3 numpy==1.26.4 tensorflow==2.15 Pillow gunicorn pytest
+
       - name: Run tests
         run: |
           pytest
@@ -48,7 +54,10 @@ jobs:
           script_stop: true
           script: |
             cd /home/ubuntu/AI/recommendation-service/app
+            git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+            git config --global user.password "${{ secrets.GIT_TOKEN }}"
             git pull https://${{ secrets.GIT_USER_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/your-repo/repository.git develop
+
             source venv/bin/activate
             sudo fuser -k -n tcp 5000 || true
             echo "" > output.log  # output.log 파일 초기화

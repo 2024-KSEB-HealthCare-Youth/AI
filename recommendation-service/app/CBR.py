@@ -1,7 +1,9 @@
 import pandas as pd
+import os
 
 # CSV 파일에서 데이터프레임 읽기
-file_path = 'recommendation-service/data/title_resultType_img.csv'
+base_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(base_dir, '../data/title_resultType_img.csv')
 product_df = pd.read_csv(file_path)
 
 def get_recommendations(base_result):

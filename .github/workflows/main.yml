@@ -54,5 +54,5 @@ jobs:
             source venv/bin/activate
             sudo fuser -k -n tcp 5000 || true
             echo "" > output.log  # output.log 파일 초기화
-            nohup python3 app.py > output.log 2>&1 &
+            nohup gunicorn -w 4 -b 0.0.0.0:5000 app:app > output.log 2>&1 &
             tail -n 10 output.log  # 마지막 10줄의 로그를 확인하여 애플리케이션이 시작되었는지 확인합니다

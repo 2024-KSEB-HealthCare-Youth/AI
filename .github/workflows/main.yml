@@ -49,8 +49,6 @@ jobs:
           script_stop: true
           script: |
             cd /home/ubuntu/AI/recommendation-service/app
-            git config --global user.name "${{ secrets.GIT_USER_NAME }}"
-            git config --global user.password "${{ secrets.GIT_TOKEN }}"
             git pull https://${{ secrets.GIT_USER_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/FeMeHaeJo/AI.git develop
 
             source venv/bin/activate

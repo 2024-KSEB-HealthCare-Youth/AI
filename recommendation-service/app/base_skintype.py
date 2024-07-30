@@ -7,7 +7,9 @@ import io
 
 
 # 모델 로드
-model = load_model('recommendation-service/data/custom_mobilenetv2_model.h5')
+base_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(base_dir, '../data/custom_mobilenetv2_model.h5')
+model = load_model(model_path)
 
 # 클래스 레이블 정의 (데이터셋에 맞게 수정)
 class_labels = ['oily', 'normal', 'dry']

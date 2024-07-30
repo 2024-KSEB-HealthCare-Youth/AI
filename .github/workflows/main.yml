@@ -51,7 +51,7 @@ jobs:
             cd /home/ubuntu/AI/recommendation-service/app
             git config --global user.name "${{ secrets.GIT_USER_NAME }}"
             git config --global user.password "${{ secrets.GIT_TOKEN }}"
-            git pull https://${{ secrets.GIT_USER_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/your-repo/repository.git develop
+            git pull https://${{ secrets.GIT_USER_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/FeMeHaeJo/AI.git develop
 
             source venv/bin/activate
             sudo fuser -k -n tcp 5000 || true

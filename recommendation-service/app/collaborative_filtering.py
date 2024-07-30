@@ -3,10 +3,10 @@ import pandas as pd
 
 # 가상의 데이터셋 생성
 data = {
-    'user_id': [1, 1, 2, 2, 3, 3, 4, 4],
-    'item_id': [101, 102, 101, 103, 102, 103, 101, 104],
-    'rating': [4, 3, 2, 5, 4, 3, 5, 1],
-    'skin_type': ['dry', 'dry', 'oily', 'oily', 'combination', 'combination', 'sensitive', 'sensitive']
+    'user_id': [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
+    'item_id': [1, 4, 10, 20, 50, 7, 100, 52, 33, 57, 83, 92],
+    'rating': [3, 2, 2, 2, 5, 3, 2, 4, 5, 4, 4, 1],
+    'skin_type': ['dry', 'dry', 'oily', 'oily', 'normal', 'normal', 'dry', 'dry', 'normal', 'normal', 'oily', 'oily']
 }
 df = pd.DataFrame(data)
 

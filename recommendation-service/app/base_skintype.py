@@ -4,7 +4,7 @@ from keras.utils import img_to_array
 from keras.applications.mobilenet_v2 import preprocess_input
 from PIL import Image
 import io
-
+import os
 
 # 모델 로드
 base_dir = os.path.dirname(os.path.abspath(__file__))

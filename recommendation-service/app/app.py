@@ -1,3 +1,5 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from flask import Flask, request, jsonify
 from flask_restx import Resource, Api, Namespace
 from flask_cors import CORS
@@ -7,8 +9,7 @@ from CBR import get_recommendations
 from nutr_recommendation import get_recommended_nutrs
 from collaborative_filtering import get_recommendations_collabo
 from resultImage import make_Image
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 
 app = Flask(__name__)
 api = Api(app)

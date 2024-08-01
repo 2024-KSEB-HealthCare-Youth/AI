@@ -8,6 +8,7 @@ from nutr_recommendation import get_recommended_nutrs
 from collaborative_filtering import get_recommendations_collabo
 from resultImage import make_Image
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 app = Flask(__name__)
 api = Api(app)

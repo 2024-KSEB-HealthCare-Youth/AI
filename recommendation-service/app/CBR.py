@@ -10,7 +10,7 @@ def get_recommendations(base_skin_type, depth_skin_type):
     # 스킨 타입 매핑
     if base_skin_type == "oily":
         skin_type = "skin_type1"
-    elif base_skin_type == "normal":
+    elif base_skin_type == "combination":
         skin_type = "skin_type2"
     else:
         skin_type = "skin_type3"

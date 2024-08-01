@@ -12,7 +12,7 @@ model_path = os.path.join(base_dir, '../data/custom_mobilenetv2_model.h5')
 model = load_model(model_path)
 
 # 클래스 레이블 정의 (데이터셋에 맞게 수정)
-class_labels = ['oily', 'normal', 'dry']
+class_labels = ['dry', 'combination', 'oily']
 
 def analyze_base_skintype(file):
     img = Image.open(io.BytesIO(file.read()))

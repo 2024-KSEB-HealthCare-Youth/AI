@@ -9,8 +9,8 @@ from CBR import get_recommendations
 from nutr_recommendation import get_recommended_nutrs
 from collaborative_filtering import get_recommendations_collabo
 from resultImage import make_Image
-#import logging
-#logging.basicConfig(level=logging.DEBUG)
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 
 app = Flask(__name__)
@@ -19,6 +19,7 @@ CORS(app)
 
 SkinAnalysis = Namespace('SkinAnalysis')
 
+'''
 @SkinAnalysis.route('')
 class SkinAnalysisResource(Resource):
     def post(self):
@@ -162,7 +163,7 @@ class SkinAnalysisResource(Resource):
             logging.exception("An error occurred")
             return jsonify({'error': str(e)}), 500
         
-'''
+
 api.add_namespace(SkinAnalysis, '/upload')
 
 if __name__ == '__main__':

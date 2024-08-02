@@ -1,13 +1,11 @@
+import os
+import io
 from ultralytics import YOLO
 from PIL import Image
-import io
-import numpy as np
-import os
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 pt_path = os.path.join(base_dir, '../data/best.pt')
 image_save_path = os.path.join(base_dir, '../data/uploaded_image.jpg')  # 이미지를 저장할 경로
-
 
 def analyze_depth_skintype(file):
     file.seek(0)
@@ -16,19 +14,24 @@ def analyze_depth_skintype(file):
     model = YOLO(pt_path)
     print('모델 로딩 성공!')
 
+    # 디버깅: task_map 확인
+    task_map = model.task_map
+    print(f"Task map: {task_map}")
+    print(f"Detect model: {task_map.get('detect')}")
+
     # 파일 객체로부터 이미지 열기
     img = Image.open(io.BytesIO(file.read()))
-    print('이미지 오픈 성공!')
+    print(img)
     img = img.resize((256, 256))
 
     # 이미지를 저장
     img.save(image_save_path)
-    print('이미지 저장 성공!')
 
     # 이미지 경로를 사용하여 예측 수행
-    print('수행 시작!')
     results = model(image_save_path)
-    print('수행 끝!')
+    print(results)
+    print("========")
+    print(results[0].boxes)
 
     # 클래스 이름 리스트 (모델에 정의된 순서대로)
     class_names = ['acne', 'dry', 'normal', 'oily', 'wrinkles']
@@ -43,6 +46,9 @@ def analyze_depth_skintype(file):
             cls = int(box.cls)
             class_name = class_names[cls]
             confidence = box.conf  # YOLOv5의 박스에서 확률 가져오기
+            print("==========제발========")
+            print(f"클래스: {class_name}, 확률: {confidence}")  # 각 클래스와 확률 출력
+
             # 'wrinkle'이나 'acne'인 경우에만 처리
             if class_name in ['wrinkles', 'acne']:
                 if class_name == 'acne':

@@ -11,3 +11,4 @@ keras==2.15
 tensorflow==2.15
 ultralytics==8.2.70
 matplotlib==3.8.3
+torch==2.3.1

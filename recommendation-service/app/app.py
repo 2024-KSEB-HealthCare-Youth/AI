@@ -1,4 +1,6 @@
 import os
+import matplotlib
+matplotlib.use('Agg')
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from flask import Flask, request, jsonify
@@ -18,7 +20,6 @@ CORS(app)
 SkinAnalysis = Namespace('SkinAnalysis')
 parser = reqparse.RequestParser()
 parser.add_argument('file', location='files', type='file', required=True, help='File to upload')
-
 
 @SkinAnalysis.route('')
 class SkinAnalysisResource(Resource):
@@ -97,4 +98,4 @@ class SkinAnalysisResource(Resource):
 api.add_namespace(SkinAnalysis, '/upload')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)  # debug 필요하면 debug=True 넣어주기 (실제 서버에서는 안넣는 것이 좋음)
+    app.run(host='0.0.0.0', port=5001)  # debug 필요하면 debug=True 넣어주기 (실제 서버에서는 안넣는 것이 좋음)

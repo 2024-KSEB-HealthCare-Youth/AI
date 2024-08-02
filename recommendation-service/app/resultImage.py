@@ -2,6 +2,7 @@ import io
 import matplotlib.pyplot as plt
 import numpy as np
 import base64
+#from flask import app
 
 def make_Image(base_probabilities, depth_probabilities):
     # 클래스 레이블
@@ -66,4 +67,6 @@ def make_Image(base_probabilities, depth_probabilities):
     plt.close()
 
     img_str = base64.b64encode(buf.getvalue()).decode()
+
+    #app.logger.info(f"resultImage_str: {img_str} (type: {type(img_str)})")
     return img_str

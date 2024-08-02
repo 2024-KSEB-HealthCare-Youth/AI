@@ -2,6 +2,7 @@ from surprise import Dataset, Reader, KNNBasic
 import pandas as pd
 import os
 import numpy as np
+#from flask import app
 
 # CSV 파일 경로 설정
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -58,5 +59,7 @@ def get_recommendations_collabo(skin_type, n=3):
     # 추천 아이템 정보가 담긴 CSV 파일에서 title과 imgurl 조회
     recommended_products = item_df[item_df['Item Number'].isin(top_items_df['item_id'])]
     recommend_items = recommended_products[['title', 'imgurl']].to_dict(orient='records')
+
+    #app.logger.info(f"recommendations_collabo: {recommend_items} (type: {type(recommend_items)})")
 
     return recommend_items

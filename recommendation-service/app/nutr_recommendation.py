@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+#from flask import app
 
 
 def get_recommended_nutrs(base_skin_type, depth_skin_type, max_recommendations=3):
@@ -36,5 +37,7 @@ def get_recommended_nutrs(base_skin_type, depth_skin_type, max_recommendations=3
         recommended_products.extend(base_products)
         recommended_products.extend(depth_products)
         recommended_products = recommended_products[:max_recommendations]
+
+    #app.logger.info(f"nutrs_recommendations: {recommended_products} (type: {type(recommended_products)})")
 
     return recommended_products

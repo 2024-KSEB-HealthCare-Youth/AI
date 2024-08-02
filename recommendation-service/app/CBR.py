@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+#from flask import app
 
 # CSV 파일에서 데이터프레임 읽기
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -29,6 +30,8 @@ def get_recommendations(base_skin_type, depth_skin_type):
 
     recommended_items = content_based_recommendation(product_df, user_profile, top_n=3)
 
+    #app.logger.info(f"recommendations: {recommended_items} (type: {type(recommended_items)})")
+
     return recommended_items
 
 
@@ -43,4 +46,5 @@ def content_based_recommendation(product_df, user_profile, top_n=3):
     recommended_products = recommended_products.sample(frac=1).head(top_n)  # 무작위로 섞은 후 상위 top_n개 선택
 
     recommend_items = recommended_products[['title', 'imgurl']].to_dict(orient='records')
+
     return recommend_items

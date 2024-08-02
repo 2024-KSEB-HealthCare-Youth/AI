@@ -1,6 +1,7 @@
 from ultralytics import YOLO
 from PIL import Image
 import io
+#from flask import app
 
 def analyze_depth_skintype(file):
     # YOLO 모델 불러오기
@@ -34,6 +35,9 @@ def analyze_depth_skintype(file):
                 elif class_name == 'wrinkles':
                     detected_conditions.add('wrinkles')
                     probabilities['wrinkles'] = max(probabilities['wrinkles'], confidence)
+
+    #app.logger.info(f"depth_skin_type: {list(detected_conditions)} (type: {type(list(detected_conditions))})")
+    #app.logger.info(f"depth_probabilities: {probabilities} (type: {type(probabilities)})")
 
     return list(detected_conditions), probabilities
 

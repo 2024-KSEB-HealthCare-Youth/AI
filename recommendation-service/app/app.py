@@ -61,13 +61,13 @@ class SkinAnalysisResource(Resource):
             cosPaths = []
 
             # CBR 추천 추가
-            for rec in recommendations:
+            for rec in recommendations_collabo:
                 cosNames.append(rec['title'])
                 cosPaths.append(rec['imgurl'])
 
             # Collaborative Filtering 추천 추가
             added_count = 0
-            for rec in recommendations_collabo:
+            for rec in recommendations:
                 if added_count >= 3:  # 최대 3개 항목을 추가
                     break
                 if rec['title'] not in cosNames:  # 중복 제거

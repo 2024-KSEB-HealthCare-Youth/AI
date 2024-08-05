@@ -1,7 +1,5 @@
 import pandas as pd
 import os
-#from flask import app
-
 
 def get_recommended_nutrs(base_skin_type, depth_skin_type, max_recommendations=3):
 
@@ -25,19 +23,30 @@ def get_recommended_nutrs(base_skin_type, depth_skin_type, max_recommendations=3
         recommended_products = base_products.to_dict(orient='records')
 
     else:
-        # base_skin_type과 일치하는 제품을 랜덤으로 1개 추출
-        base_products = df[base_filter].sample(n=1, random_state=None).to_dict(orient='records')
+        # depth_skin_type이 1개인 경우
+        if len(depth_skin_type) == 1:
+            depth_filter = depth_filters[0]
+            depth_products = df[depth_filter].sample(n=2, random_state=None).to_dict(orient='records')
+            base_products = df[base_filter].sample(n=1, random_state=None).to_dict(orient='records')
+            recommended_products.extend(depth_products)
+            recommended_products.extend(base_products[:1])
 
-        # depth_skin_type과 일치하는 제품을 랜덤으로 추출
-        depth_products = []
-        for depth_filter in depth_filters:
-            depth_products.extend(df[depth_filter].sample(n=1, random_state=None).to_dict(orient='records'))
+        # depth_skin_type이 2개인 경우
+        elif len(depth_skin_type) == 2:
+            depth_products_1 = df[depth_filters[0]].sample(n=1, random_state=None).to_dict(orient='records')
+            depth_products_2 = df[depth_filters[1]].sample(n=1, random_state=None).to_dict(orient='records')
+            base_products = df[base_filter].sample(n=1, random_state=None).to_dict(orient='records')
+            recommended_products.extend(depth_products_1)
+            recommended_products.extend(depth_products_2)
+            recommended_products.extend(base_products[:1])
 
-        # 합쳐서 총 3개까지 반환
-        recommended_products.extend(base_products)
-        recommended_products.extend(depth_products)
-        recommended_products = recommended_products[:max_recommendations]
-
-    #app.logger.info(f"nutrs_recommendations: {recommended_products} (type: {type(recommended_products)})")
+    # 최종 추천 목록을 최대 max_recommendations만큼 잘라내기
+    recommended_products = recommended_products[:max_recommendations]
 
     return recommended_products
+
+# 예제 사용법
+# base_skin_type = "dry"
+# depth_skin_type = ["wrinkles", "acne"]
+# recommended_products = get_recommended_nutrs(base_skin_type, depth_skin_type)
+# print(f"Recommended Products: {recommended_products}")

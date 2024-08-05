@@ -2,7 +2,6 @@ from surprise import Dataset, Reader, KNNBasic
 import pandas as pd
 import os
 import numpy as np
-#from flask import app
 
 # CSV 파일 경로 설정
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -50,7 +49,7 @@ def get_recommendations_collabo(skin_type, n=3):
         top_predictions = top_predictions[:n]
     else:
         np.random.shuffle(top_predictions)
-        top_predictions = top_predictions[:n]
+        top_predictions = top_predictions[:min(n, len(top_predictions))]
 
     # 추천 아이템의 ID와 예측 평점을 DataFrame으로 변환
     top_items = [(pred.iid, pred.est) for pred in top_predictions]
@@ -58,8 +57,12 @@ def get_recommendations_collabo(skin_type, n=3):
 
     # 추천 아이템 정보가 담긴 CSV 파일에서 title과 imgurl 조회
     recommended_products = item_df[item_df['Item Number'].isin(top_items_df['item_id'])]
-    recommend_items = recommended_products[['title', 'imgurl']].to_dict(orient='records')
 
-    #app.logger.info(f"recommendations_collabo: {recommend_items} (type: {type(recommend_items)})")
+    # 추천 아이템이 3개 미만일 경우, 임의의 제품을 추가로 추천하여 3개를 채움
+    if len(recommended_products) < n:
+        additional_products = item_df[~item_df['Item Number'].isin(top_items_df['item_id'])].sample(n - len(recommended_products))
+        recommended_products = pd.concat([recommended_products, additional_products])
+
+    recommend_items = recommended_products[['title', 'imgurl']].to_dict(orient='records')
 
     return recommend_items

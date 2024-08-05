@@ -85,8 +85,8 @@ class SkinAnalysisResource(Resource):
                 'nutrNames': nutrNames,
                 'nutrPaths': nutrPaths,
                 'simpleSkin': base_skin_type,
-                'expertSkin': depth_skin_type,  # 여기에 실제 expertSkin 정보를 넣으세요
-                'resultImage': resultImage_str  # 여기에 실제 resultPath를 설정하세요
+                'expertSkin': depth_skin_type,
+                'resultImage': resultImage_str
             }
 
             return jsonify(response)

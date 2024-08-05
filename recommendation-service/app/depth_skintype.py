@@ -11,9 +11,6 @@ def analyze_depth_skintype(file):
     file.seek(0)
     model = YOLO(pt_path)
 
-    # 디버깅: task_map 확인
-    task_map = model.task_map
-
     # 파일 객체로부터 이미지 열기
     img = Image.open(io.BytesIO(file.read()))
 

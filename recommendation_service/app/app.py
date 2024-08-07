@@ -24,7 +24,7 @@ parser.add_argument('file', location='files', type='file', required=True, help='
 
 @SkinAnalysis.route('')
 class SkinAnalysisResource(Resource):
-    @SkinAnalysis.expect(parser)  # reqparse를 사용한 파라미터 기대
+    @SkinAnalysis.expect(parser)
     def post(self):
         file = request.files.get('file')
 
@@ -91,7 +91,7 @@ class SkinAnalysisResource(Resource):
             }
 
             # JSON 데이터를 청크로 나눠서 스트리밍 전송
-            def generate_response_chunks(response):
+            def generate_response_chunks(response, chunk_size=1024):
                 yield '{'
                 first = True
                 for key, value in response.items():
@@ -99,16 +99,22 @@ class SkinAnalysisResource(Resource):
                         yield ', '
                     yield json.dumps(key)
                     yield ': '
-                    yield json.dumps(value)
+                    if isinstance(value, str) and len(value) > chunk_size:
+                        yield from split_string_to_chunks(value, chunk_size)
+                    else:
+                        yield json.dumps(value)
                     first = False
                 yield '}'
 
+            def split_string_to_chunks(string, chunk_size):
+                for i in range(0, len(string), chunk_size):
+                    yield json.dumps(string[i:i+chunk_size])
+
             return Response(generate_response_chunks(response), content_type='application/json')
-            #jsonify(response)
+            # jsonify(response)
         except Exception as e:
             # 예외 처리 (보안 고려 필요)
             return jsonify({'error': str(e)}), 500
-
 
 api.add_namespace(SkinAnalysis, '/upload')
 

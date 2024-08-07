@@ -35,10 +35,7 @@ def analyze_base_skintype(file):
     #app.logger.info(f"base_skin_type: {predicted_class} (type: {type(predicted_class)})")
     #app.logger.info(f"base_probabilities: {probabilities} (type: {type(probabilities)})")
 
-    base_conditions = set()
-    base_conditions.add(predicted_class)
-
-    return list(base_conditions), probabilities
+    return predicted_class, probabilities
 
 # Example usage:
 # with open('path_to_image.jpg', 'rb') as image_file:

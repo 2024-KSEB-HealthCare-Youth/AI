@@ -12,7 +12,7 @@ from CBR import get_recommendations
 from nutr_recommendation import get_recommended_nutrs
 from collaborative_filtering import get_recommendations_collabo
 from resultImage import make_Image
-from gzip import gzip_compress
+from compressresponse import gzip_compress
 
 app = Flask(__name__)
 api = Api(app)

@@ -1,5 +1,6 @@
 import os
 import matplotlib
+import json
 matplotlib.use('Agg')
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -12,7 +13,6 @@ from CBR import get_recommendations
 from nutr_recommendation import get_recommended_nutrs
 from collaborative_filtering import get_recommendations_collabo
 from resultImage import make_Image
-from compressresponse import gzip_compress
 
 app = Flask(__name__)
 api = Api(app)
@@ -90,12 +90,21 @@ class SkinAnalysisResource(Resource):
                 'resultImage': resultImage_str
             }
 
-            compressed_data = gzip_compress(response)
-            result_respose = Response(compressed_data)
-            result_respose.headers['Content-Encoding'] = 'gzip'
-            result_respose.headers['Content-Type'] = 'application/json'
+            # JSON 데이터를 청크로 나눠서 스트리밍 전송
+            def generate_response_chunks(response):
+                yield '{'
+                first = True
+                for key, value in response.items():
+                    if not first:
+                        yield ', '
+                    yield json.dumps(key)
+                    yield ': '
+                    yield json.dumps(value)
+                    first = False
+                yield '}'
+
+            return Response(generate_response_chunks(response), content_type='application/json')
             #jsonify(response)
-            return result_respose
         except Exception as e:
             # 예외 처리 (보안 고려 필요)
             return jsonify({'error': str(e)}), 500

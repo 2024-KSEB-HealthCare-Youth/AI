@@ -3,7 +3,7 @@ import matplotlib
 matplotlib.use('Agg')
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_restx import Resource, Api, Namespace, reqparse
 from flask_cors import CORS
 from base_skintype import analyze_base_skintype
@@ -12,6 +12,7 @@ from CBR import get_recommendations
 from nutr_recommendation import get_recommended_nutrs
 from collaborative_filtering import get_recommendations_collabo
 from resultImage import make_Image
+from gzip import gzip_compress
 
 app = Flask(__name__)
 api = Api(app)
@@ -89,7 +90,12 @@ class SkinAnalysisResource(Resource):
                 'resultImage': resultImage_str
             }
 
-            return jsonify(response)
+            compressed_data = gzip_compress(response)
+            result_respose = Response(compressed_data)
+            result_respose.headers['Content-Encoding'] = 'gzip'
+            result_respose.headers['Content-Type'] = 'application/json'
+            #jsonify(response)
+            return result_respose
         except Exception as e:
             # 예외 처리 (보안 고려 필요)
             return jsonify({'error': str(e)}), 500

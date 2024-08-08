@@ -21,28 +21,30 @@ def analyze_depth_skintype(file):
     results = model(image_save_path)
 
     # 클래스 이름 리스트 (모델에 정의된 순서대로)
-    class_names = ['acne', 'dry', 'normal', 'oily', 'wrinkles']
+    class_names = ['ACNE', 'dry', 'normal', 'oily', 'WRINKLES']
 
     # 각 클래스의 초기 확률을 0으로 설정
-    probabilities = {'acne': 0.0, 'wrinkles': 0.0}
+    probabilities = {'ACNE': 0.0, 'WRINKLES': 0.0}
 
-    detected_conditions = set()
+    detected_classes = set()
 
-    for result in results:
-        for box in result.boxes:
-            cls = int(box.cls)
-            class_name = class_names[cls]
-            confidence = box.conf.item()  # YOLOv5의 박스에서 확률 가져오기 (tensor를 float로 변환)
+    # 첫 번째 결과에서 박스와 신뢰도 점수 가져오기
+    boxes = results[0].boxes
+    confidences = boxes.conf
+    class_ids = boxes.cls
 
-            # 'wrinkle'이나 'acne'인 경우에만 처리
-            if class_name in ['wrinkles', 'acne']:
-                if class_name == 'acne':
-                    detected_conditions.add('acne')
-                    probabilities['acne'] = max(probabilities['acne'], confidence)
-                elif class_name == 'wrinkles':
-                    detected_conditions.add('wrinkles')
-                    probabilities['wrinkles'] = max(probabilities['wrinkles'], confidence)
+    if len(boxes) > 0:
+        for cls, conf in zip(class_ids, confidences):
+            class_id = int(cls)
+            class_name = class_names[class_id]
 
+            # 'acne'와 'wrinkles'만 처리
+            if class_name == 'ACNE':
+                detected_classes.add('ACNE')
+                probabilities['ACNE'] = max(probabilities['ACNE'], conf.item())
+            elif class_name == 'WRINKLES':
+                detected_classes.add('WRINKLES')
+                probabilities['WRINKLES'] = max(probabilities['WRINKLES'], conf.item())
     # 저장된 이미지 삭제
     os.remove(image_save_path)
-    return list(detected_conditions), probabilities
+    return list(detected_classes), probabilities

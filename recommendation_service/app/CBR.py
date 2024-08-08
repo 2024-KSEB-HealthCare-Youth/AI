@@ -8,17 +8,17 @@ product_df = pd.read_csv(file_path)
 
 def get_recommendations(base_skin_type, depth_skin_type):
     # 스킨 타입 매핑
-    if base_skin_type == "oily":
+    if base_skin_type == "OILY":
         skin_type = "skin_type1"
-    elif base_skin_type == "combination":
+    elif base_skin_type == "COMBINATION":
         skin_type = "skin_type2"
     else:
         skin_type = "skin_type3"
 
     # depth_skin_type을 변환
     skin_trouble_mapping = {
-        'acne': 'skin_trouble2',
-        'wrinkles': 'skin_trouble3'
+        'ACNE': 'skin_trouble2',
+        'WRINKLES': 'skin_trouble3'
     }
     skin_trouble = [skin_trouble_mapping.get(condition, condition) for condition in depth_skin_type]
 

@@ -6,7 +6,7 @@ import numpy as np
 # CSV 파일 경로 설정
 base_dir = os.path.dirname(os.path.abspath(__file__))
 data_csv_path = os.path.join(base_dir, '../data/data.csv')
-item_data_csv_path = os.path.join(base_dir, '../data/title_resultType_img.csv')
+item_data_csv_path = os.path.join(base_dir, '../data/cosmetics.csv')
 
 # 데이터와 아이템 정보가 담긴 CSV 파일을 로드합니다
 df = pd.read_csv(data_csv_path)

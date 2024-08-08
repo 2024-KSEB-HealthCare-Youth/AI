@@ -3,7 +3,7 @@ import os
 
 # CSV 파일에서 데이터프레임 읽기
 base_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(base_dir, '../data/title_resultType_img.csv')
+file_path = os.path.join(base_dir, '../data/cosmetics.csv')
 product_df = pd.read_csv(file_path)
 
 def get_recommendations(base_skin_type, depth_skin_type):

@@ -45,6 +45,9 @@ class SkinAnalysisResource(Resource):
             # Depth Skin Type 분석
             depth_skin_type, depth_probabilities = analyze_depth_skintype(file)
 
+            # 두 개의 확률 딕셔너리를 합침
+            result_probabilities = {**base_probabilities, **depth_probabilities}
+
             # CBR 추천
             recommendations = get_recommendations(base_skin_type, depth_skin_type)
 
@@ -87,31 +90,10 @@ class SkinAnalysisResource(Resource):
                 'nutrPaths': nutrPaths,
                 'simpleSkin': base_skin_type,
                 'expertSkin': depth_skin_type,
-                'resultImage': resultImage_str
+                'probabilities': result_probabilities
             }
 
-            # JSON 데이터를 청크로 나눠서 스트리밍 전송
-            def generate_response_chunks(response, chunk_size=1024):
-                yield '{'
-                first = True
-                for key, value in response.items():
-                    if not first:
-                        yield ', '
-                    yield json.dumps(key)
-                    yield ': '
-                    if isinstance(value, str) and len(value) > chunk_size:
-                        yield from split_string_to_chunks(value, chunk_size)
-                    else:
-                        yield json.dumps(value)
-                    first = False
-                yield '}'
-
-            def split_string_to_chunks(string, chunk_size):
-                for i in range(0, len(string), chunk_size):
-                    yield json.dumps(string[i:i+chunk_size])
-
-            return Response(generate_response_chunks(response), content_type='application/json')
-            # jsonify(response)
+            return jsonify(response)
         except Exception as e:
             # 예외 처리 (보안 고려 필요)
             return jsonify({'error': str(e)}), 500

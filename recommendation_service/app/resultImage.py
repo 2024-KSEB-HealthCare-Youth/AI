@@ -6,7 +6,7 @@ import base64
 
 def make_Image(base_probabilities, depth_probabilities):
     # 클래스 레이블
-    skin_types = ['oily', 'normal', 'dry']
+    skin_types = ['oily', 'combination', 'dry']
     skin_troubles = ['acne', 'wrinkles']
 
     # Base skin type 확률

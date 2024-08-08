@@ -16,6 +16,7 @@ from collaborative_filtering import get_recommendations_collabo
 app = Flask(__name__)
 api = Api(app)
 CORS(app)
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 1024
 
 SkinAnalysis = Namespace('SkinAnalysis')
 parser = reqparse.RequestParser()

@@ -12,7 +12,6 @@ from depth_skintype import analyze_depth_skintype
 from CBR import get_recommendations
 from nutr_recommendation import get_recommended_nutrs
 from collaborative_filtering import get_recommendations_collabo
-from resultImage import make_Image
 
 app = Flask(__name__)
 api = Api(app)
@@ -56,9 +55,6 @@ class SkinAnalysisResource(Resource):
 
             # Nutritional 추천
             nutrs_recommendations = get_recommended_nutrs(base_skin_type, depth_skin_type)
-
-            # resultImage 생성
-            resultImage_str = make_Image(base_probabilities, depth_probabilities)
 
             # 결과 집합 초기화
             cosNames = []

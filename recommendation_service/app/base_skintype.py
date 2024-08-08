@@ -5,7 +5,6 @@ from keras.applications.mobilenet_v2 import preprocess_input
 from PIL import Image
 import io
 import os
-#from flask import app
 
 # 모델 로드
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -32,13 +31,4 @@ def analyze_base_skintype(file):
     # 각 클래스에 대한 확률 매핑
     probabilities = {class_labels[i]: float(predictions[0][i]) for i in range(len(class_labels))}
 
-    #app.logger.info(f"base_skin_type: {predicted_class} (type: {type(predicted_class)})")
-    #app.logger.info(f"base_probabilities: {probabilities} (type: {type(probabilities)})")
-
     return predicted_class, probabilities
-
-# Example usage:
-# with open('path_to_image.jpg', 'rb') as image_file:
-#     skin_type, predicted_probability, probabilities = analyze_base_skintype(image_file)
-#     print(f"Skin Type: {skin_type}, Probability: {predicted_probability}")
-#     print(f"All Probabilities: {probabilities}")

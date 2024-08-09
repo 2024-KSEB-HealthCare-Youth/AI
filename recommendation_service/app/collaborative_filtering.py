@@ -21,7 +21,7 @@ trainset = dataset.build_full_trainset()
 
 # KNN 모델 생성 및 학습
 sim_options = {
-    'name': 'pearson',
+    'name': 'msd',
     'user_based': True  # 사용자 기반 협업 필터링
 }
 algo = KNNBasic(sim_options=sim_options)

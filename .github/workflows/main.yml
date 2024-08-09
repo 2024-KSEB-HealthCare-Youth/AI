@@ -40,19 +40,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install flask_cors pandas==2.1.3 scikit-surprise==1.1.4 flask==3.0.3 flask_restx==1.3.0 requests==2.32.3 numpy==1.26.4 tensorflow==2.15 keras==2.15 Pillow gunicorn
 
-      - name: SSH로 EC2에 접속하기
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          script_stop: true
-          script: |
-            cd /home/ubuntu/AI/recommendation-service/app
-            git pull https://${{ secrets.GIT_USER_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/FeMeHaeJo/AI.git develop
-
-            source venv/bin/activate
-            sudo fuser -k -n tcp 5000 || true
-            echo "" > output.log  # output.log 파일 초기화
-            nohup gunicorn -w 4 -b 0.0.0.0:5000 app:app > output.log 2>&1 &
-            tail -n 10 output.log  # 마지막 10줄의 로그를 확인하여 애플리케이션이 시작되었는지 확인합니다
+#      - name: SSH로 EC2에 접속하기
+ #       uses: appleboy/ssh-action@v1.0.3
+  #      with:
+   #       host: ${{ secrets.EC2_HOST }}
+    #      username: ${{ secrets.EC2_USERNAME }}
+     #     key: ${{ secrets.EC2_PRIVATE_KEY }}
+      #    script_stop: true
+       #   script: |
+        #    cd /home/ubuntu/AI/recommendation-service/app
+         #   git pull https://${{ secrets.GIT_USER_NAME }}:${{ secrets.GIT_TOKEN }}@github.com/FeMeHaeJo/AI.git develop
+#
+ #           source venv/bin/activate`
+  #          sudo fuser -k -n tcp 5000 || true
+   #         echo "" > output.log  # output.log 파일 초기화
+    #        nohup gunicorn -w 4 -b 0.0.0.0:5000 app:app > output.log 2>&1 &
+     #       tail -n 10 output.log  # 마지막 10줄의 로그를 확인하여 애플리케이션이 시작되었는지 확인합니다

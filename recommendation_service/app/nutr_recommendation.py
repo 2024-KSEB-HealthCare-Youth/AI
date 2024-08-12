@@ -44,9 +44,3 @@ def get_recommended_nutrs(base_skin_type, depth_skin_type, max_recommendations=3
     recommended_products = recommended_products[:max_recommendations]
 
     return recommended_products
-
-# 예제 사용법
-# base_skin_type = "dry"
-# depth_skin_type = ["wrinkles", "acne"]
-# recommended_products = get_recommended_nutrs(base_skin_type, depth_skin_type)
-# print(f"Recommended Products: {recommended_products}")

@@ -4,7 +4,7 @@ from ultralytics import YOLO
 from PIL import Image
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-pt_path = os.path.join(base_dir, '../data/best.pt')
+pt_path = os.path.join(base_dir, '../data/final_best.pt')
 image_save_path = os.path.join(base_dir, '../data/test.jpg')  # 이미지를 저장할 경로
 model = YOLO(pt_path)
 

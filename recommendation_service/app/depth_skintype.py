@@ -4,12 +4,12 @@ from ultralytics import YOLO
 from PIL import Image
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-pt_path = os.path.join(base_dir, '../data/final_best.pt')
+pt_path = os.path.join(base_dir, '../data/best.pt')
 image_save_path = os.path.join(base_dir, '../data/test.jpg')  # 이미지를 저장할 경로
+model = YOLO(pt_path)
 
 def analyze_depth_skintype(file):
     file.seek(0)
-    model = YOLO(pt_path)
 
     # 파일 객체로부터 이미지 열기
     img = Image.open(io.BytesIO(file.read()))
@@ -41,10 +41,10 @@ def analyze_depth_skintype(file):
             # 'acne'와 'wrinkles'만 처리
             if class_name == 'ACNE':
                 detected_classes.add('ACNE')
-                probabilities['ACNE'] = max(probabilities['ACNE'], conf.item())
+                probabilities['ACNE'] = max(probabilities['ACNE'], conf.item()+0.35)
             elif class_name == 'WRINKLES':
                 detected_classes.add('WRINKLES')
-                probabilities['WRINKLES'] = max(probabilities['WRINKLES'], conf.item())
+                probabilities['WRINKLES'] = max(probabilities['WRINKLES'], conf.item()+0.35)
     # 저장된 이미지 삭제
     os.remove(image_save_path)
     return list(detected_classes), probabilities

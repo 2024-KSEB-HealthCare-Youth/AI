@@ -41,10 +41,10 @@ def analyze_depth_skintype(file):
             # 'acne'와 'wrinkles'만 처리
             if class_name == 'ACNE':
                 detected_classes.add('ACNE')
-                probabilities['ACNE'] = max(probabilities['ACNE'], conf.item()+0.35)
+                probabilities['ACNE'] = max(probabilities['ACNE'], conf.item())
             elif class_name == 'WRINKLES':
                 detected_classes.add('WRINKLES')
-                probabilities['WRINKLES'] = max(probabilities['WRINKLES'], conf.item()+0.35)
+                probabilities['WRINKLES'] = max(probabilities['WRINKLES'], conf.item())
     # 저장된 이미지 삭제
     os.remove(image_save_path)
     return list(detected_classes), probabilities

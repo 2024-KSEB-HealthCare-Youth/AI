@@ -48,11 +48,6 @@ class SkinAnalysisResource(Resource):
             # 두 개의 확률 딕셔너리를 합침
             result_probabilities = {**base_probabilities, **depth_probabilities}
 
-            # ACNE와 WRINKLES 확률에 0.25 추가
-            for key in ['ACNE', 'WRINKLES']:
-                if result_probabilities.get(key, 0.0) > 0.0:
-                    result_probabilities[key] += 0.25
-
             # CBR 추천
             recommendations = get_recommendations(base_skin_type, depth_skin_type)
 
